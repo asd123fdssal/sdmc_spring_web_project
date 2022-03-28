@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragment/head.html::head">
+    <title>SDMC 게임 리스트</title>
+</head>
+<body>
+
+<div th:replace="fragment/navigation.html::nav"></div>
+<div class="py-2 bg-gray-200 flex justify-center">
+    <button class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/genre/list'" >장르 리스트</button>
+    <button class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/series/list'" >시리즈 리스트</button>
+    <button class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/company/list'" >회사 리스트</button>
+    <button class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/title/new'" >게임 추가</button>
+</div>
+
+<h1 class="flex justify-center mt-3">게임 목록</h1>
+<div class="py-10 flex justify-center" style="font-size: 12px">
+    <div class="flex w-75">
+        <table class="table table-responsive">
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center" style="width: 10%">회사명</th>
+                <th class="text-center" style="width: 8%">출시일</th>
+                <th class="text-center" style="width: 30%">시리즈명 (한글)</th>
+                <th class="text-center" style="width: 30%">시리즈명 (원어)</th>
+                <th class="text-center" style="width: 10%">생성일</th>
+                <th class="text-center" style="width: 10%">수정일</th>
+            </tr>
+            <tr th:each="list : ${title_list}">
+                <th class="text-center" th:text="${list.id}">#</th>
+                <th class="text-center" th:text="${list.company.korName}">#</th>
+                <th class="text-center" th:text="${#temporals.format(list.releaseDate, 'yyyy-MM-dd')}">장르명</th>
+                <th th:text="${list.korName}">장르명</th>
+                <th th:text="${list.orgName}">장르명</th>
+                <th class="text-center" th:text="${#temporals.format(list.created_at, 'yyyy-MM-dd HH:mm')}">생성일</th>
+                <th class="text-center" th:text="${#temporals.format(list.updated_at, 'yyyy-MM-dd HH:mm')}">수정일</th>
+            </tr>
+        </table>
+    </div>
+</div>
+</div>
+
+</body>
+</html>

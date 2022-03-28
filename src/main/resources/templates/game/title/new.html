@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragment/head.html::head">
+    <title>SDMC 타이틀 추가</title>
+</head>
+<body>
+
+<div th:replace="fragment/navigation.html::nav"></div>
+
+<div class="py-32 bg-gray-200 flex justify-center">
+    <div class="w-full max-w-xs">
+        <form id="titleForm" autocomplete="off" class="bg-white shadow-md rounded px-5 pt-4 pb-4 mb-4" th:action="@{/game/title/new}" method="post" th:object="${Title}" enctype="multipart/form-data">
+            <div style="font-size: 32px;font-family: NanumGothicOTF,serif" class="mb-2 flex justify-center items-center">
+                타이틀 추가
+            </div>
+
+            <div>
+                <span>이미지 선택 : </span>
+                <input type="file" name="file" class="form-control-file mb-3">
+            </div>
+            <select th:field="*{company_name}" class="mb-3 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                <option value="" >-- 회사명 --</option>
+                <option th:each="list : ${Company}" th:value="${list.korName}" th:text="${list.korName}">VALUE</option>
+            </select>
+
+            <div class="mb-3">
+                <input type="text" id="rel_date" th:field="*{releaseDate}" placeholder="발매일" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+
+            <div class="mb-3">
+                <input type="text" id="new_game_kor" th:field="*{korName}" placeholder="게임명(한글)" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <span class="mb-3" style="color: red" th:if="${#fields.hasErrors('korName')}" th:errors="*{korName}"><p>게임명 에러</p></span>
+
+            <div class="mb-3">
+                <input type="text" id="new_game_org" th:field="*{orgName}" placeholder="게임명(원어)" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <div class="mb-3">
+                <input type="text" id="hook_code" th:field="*{hookCode}" placeholder="후킹코드" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <div class="mb-3">
+                <input type="text" id="etc" th:field="*{etc}" placeholder="기타 기록사항" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <div class="mb-2">
+                <button id="add" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
+                    추가
+                </button>
+            </div>
+            <div>
+                <button type="button" id="btn_joinForm" onclick="location.href='/game/series/list'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
+                    취소
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

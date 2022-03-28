@@ -30,7 +30,7 @@ public class SeriesController {
     }
 
     @GetMapping("/game/series/new")
-    public String new_genre(
+    public String new_series(
             Model model
     ) {
         model.addAttribute("Series", new Series());
@@ -38,7 +38,7 @@ public class SeriesController {
     }
 
     @PostMapping("/game/series/new")
-    public String new_genre(
+    public String new_series(
             Model model,
             @Valid @ModelAttribute("Series") Series series,
             BindingResult bindingResult
