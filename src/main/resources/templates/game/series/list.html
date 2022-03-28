@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragment/head.html::head">
+    <title>SDMC 장르 리스트</title>
+</head>
+<body>
+<div>
+    <div th:replace="fragment/navigation.html::nav"></div>
+
+    <div class="py-2 bg-gray-200 flex justify-center">
+        <button class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/series/new'" >시리즈 추가</button>
+    </div>
+
+    <h1 class="flex justify-center mt-3">장르 목록</h1>
+    <div class="py-10 flex justify-center">
+        <div class="flex w-75">
+            <table class="table table-responsive">
+                <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center" style="width: 20%">시리즈명 (한글)</th>
+                    <th class="text-center" style="width: 20%">시리즈명 (원어)</th>
+                    <th class="text-center" style="width: 20%">별칭 (줄임말)</th>
+                    <th class="text-center">생성일</th>
+                    <th class="text-center">수정일</th>
+                </tr>
+                <tr th:each="list : ${series_list}">
+                    <th th:text="${list.id}">#</th>
+                    <th th:text="${list.korName}">장르명</th>
+                    <th th:text="${list.orgName}">장르명</th>
+                    <th th:text="${list.nickname}">장르명</th>
+                    <th th:text="${#temporals.format(list.created_at, 'yyyy-MM-dd HH:mm')}">생성일</th>
+                    <th th:text="${#temporals.format(list.updated_at, 'yyyy-MM-dd HH:mm')}">수정일</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

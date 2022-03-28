@@ -30,6 +30,7 @@ dependencies {
 	//implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.thymeleaf:thymeleaf'
 	implementation 'org.thymeleaf:thymeleaf-spring5'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-java8time'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 	implementation 'org.hibernate:hibernate-core'
 	runtimeOnly 'mysql:mysql-connector-java'

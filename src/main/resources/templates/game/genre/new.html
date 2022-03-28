@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragment/head.html::head">
+    <title>SDMC 장르 추가</title>
+</head>
+<body>
+
+<div th:replace="fragment/navigation.html::nav"></div>
+
+<div class="py-32 bg-gray-200 flex justify-center">
+    <div class="w-full max-w-xs">
+        <form id="loginForm" autocomplete="off" class="bg-white shadow-md rounded px-5 pt-4 pb-4 mb-4" th:action="@{/game/genre/new}" method="post" th:object="${Genre}">
+            <div style="font-size: 32px;font-family: NanumGothicOTF,serif" class="mb-2 flex justify-center items-center">
+                장르 추가
+            </div>
+
+            <div class="mb-3">
+                <input type="text" id="new_genre_name" th:field="*{name}" name="new_genre_name" placeholder="장르명" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <span class="mb-3" style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"><p>장르명 에러</p></span>
+            <div class="mb-3" style="color: green" th:if="${success}">추가되었습니다.</div>
+
+            <div class="mb-2">
+                <button id="add" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
+                    추가
+                </button>
+            </div>
+            <div>
+                <button type="button" id="btn_joinForm" onclick="location.href='/game/genre/list'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
+                    취소
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
