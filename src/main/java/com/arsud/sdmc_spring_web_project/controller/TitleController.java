@@ -3,7 +3,9 @@ package com.arsud.sdmc_spring_web_project.controller;
 import com.arsud.sdmc_spring_web_project.entity.Company;
 import com.arsud.sdmc_spring_web_project.entity.Title;
 import com.arsud.sdmc_spring_web_project.service.CompanyService;
+import com.arsud.sdmc_spring_web_project.service.GenreService;
 import com.arsud.sdmc_spring_web_project.service.TitleService;
+import com.arsud.sdmc_spring_web_project.utils.ImageUtilty;
 import com.arsud.sdmc_spring_web_project.validator.TitleValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -23,12 +25,15 @@ public class TitleController {
     private final TitleService titleService;
     private final CompanyService companyService;
     private final TitleValidator titleValidator;
+    private final ImageUtilty imageUtilty;
+    private final GenreService genreService;
 
     @GetMapping("/game/title/list")
     public String game(
             Model model
     ){
         List<Title> tList = titleService.findAll();
+        tList.forEach(t -> t.setEncodeImage(imageUtilty.makeBase64Image(t.getPicture())));
         model.addAttribute("title_list", titleService.findAll());
         return "/game/title/list";
     }
@@ -42,6 +47,18 @@ public class TitleController {
         return "/game/title/new";
     }
 
+    @GetMapping("/game/title/detail/{id}")
+    public String game_detail(
+            Model model,
+            @PathVariable Long id
+    ){
+        Title title = titleService.findById(id);
+        title.setEncodeImage(imageUtilty.makeBase64Image(title.getPicture()));
+        title.setCompany_name(title.getCompany().getKorName());
+        model.addAttribute("Company", companyService.findAll());
+        model.addAttribute("Title", title);
+        return "/game/title/detail";
+    }
 
     @PostMapping("/game/title/new")
     public String game_new(
@@ -77,6 +94,14 @@ public class TitleController {
         );
 
         return "redirect:/game/title/list";
+    }
+
+    @GetMapping("/game/title/sel_genre")
+    public String sel_genre(
+            Model model
+    ){
+        model.addAttribute("genre_list", genreService.findAll());
+        return "/game/title/sel_genre";
     }
 
 }

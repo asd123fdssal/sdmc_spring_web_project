@@ -19,15 +19,11 @@
                     <th class="text-center" style="width: 1%"> </th>
                     <th class="text-center" style="width: 35%">회사명 (한글)</th>
                     <th class="text-center" style="width: 35%">회사명 (원어)</th>
-                    <th class="text-center" style="width: 10%">생성일</th>
-                    <th class="text-center" style="width: 10%">수정일</th>
                 </tr>
                 <tr th:each="list : ${company_list}">
                     <th th:text="${list.id}">#</th>
                     <th th:text="${list.korName}">장르명</th>
                     <th th:text="${list.orgName}">장르명</th>
-                    <th th:text="${#temporals.format(list.created_at, 'yyyy-MM-dd HH:mm')}">생성일</th>
-                    <th th:text="${#temporals.format(list.updated_at, 'yyyy-MM-dd HH:mm')}">수정일</th>
                 </tr>
             </table>
         </div>

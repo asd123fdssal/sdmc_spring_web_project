@@ -18,14 +18,10 @@
                 <tr>
                     <th class="text-center" style="width: 1%">#</th>
                     <th class="text-center" style="width: 70%">장르명</th>
-                    <th class="text-center" style="width: 10%">생성일</th>
-                    <th class="text-center" style="width: 10%">수정일</th>
                 </tr>
                 <tr th:each="list : ${genre_list}">
                     <th th:text="${list.id}">#</th>
                     <th th:text="${list.name}">장르명</th>
-                    <th th:text="${#temporals.format(list.created_at, 'yyyy-MM-dd HH:mm')}">생성일</th>
-                    <th th:text="${#temporals.format(list.updated_at, 'yyyy-MM-dd HH:mm')}">수정일</th>
                 </tr>
             </table>
         </div>

@@ -6,6 +6,7 @@ import com.arsud.sdmc_spring_web_project.repository.TitleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class TitleService {
     public Title save(
         Company company,
         byte[] picture,
-        LocalDateTime releaseDate,
+        LocalDate releaseDate,
         String korName,
         String orgName,
         String hookCode,
@@ -39,4 +40,5 @@ public class TitleService {
     }
 
     public List<Title> findAll(){ return titleRepository.findAllByValid(true); }
+    public Title findById(Long id) { return titleRepository.findByValidAndId(true, id); }
 }

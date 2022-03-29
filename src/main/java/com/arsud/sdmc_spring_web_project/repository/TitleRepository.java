@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface TitleRepository extends JpaRepository<Title, Long> {
     List<Title> findAllByValid(Boolean valid);
+    Title findByValidAndId(Boolean valid, Long id);
 }

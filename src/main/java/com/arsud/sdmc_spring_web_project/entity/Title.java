@@ -26,7 +26,7 @@ public class Title extends BaseEntity{
     private byte[] picture;
 
     @Column(name = "release_date")
-    private LocalDateTime releaseDate;
+    private LocalDate releaseDate;
 
 
     @Column(name = "kor_name")
@@ -44,4 +44,7 @@ public class Title extends BaseEntity{
 
     @Transient
     private String company_name;
+
+    @Transient
+    private String encodeImage;
 }

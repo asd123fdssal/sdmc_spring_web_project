@@ -20,16 +20,12 @@
                     <th class="text-center" style="width: 20%">시리즈명 (한글)</th>
                     <th class="text-center" style="width: 20%">시리즈명 (원어)</th>
                     <th class="text-center" style="width: 20%">별칭 (줄임말)</th>
-                    <th class="text-center">생성일</th>
-                    <th class="text-center">수정일</th>
                 </tr>
                 <tr th:each="list : ${series_list}">
                     <th th:text="${list.id}">#</th>
                     <th th:text="${list.korName}">장르명</th>
                     <th th:text="${list.orgName}">장르명</th>
                     <th th:text="${list.nickname}">장르명</th>
-                    <th th:text="${#temporals.format(list.created_at, 'yyyy-MM-dd HH:mm')}">생성일</th>
-                    <th th:text="${#temporals.format(list.updated_at, 'yyyy-MM-dd HH:mm')}">수정일</th>
                 </tr>
             </table>
         </div>
