@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="https://www.thymeleaf.org">
+<html lang="ko" xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head th:replace="fragment/head.html::head">
     <title>SDMC 타이틀 추가</title>
 </head>
@@ -10,8 +10,7 @@
     let openWin;
     window.name = "mgmtTitle";
 
-    function openChild()
-    {
+    function openChild(){
         openWin = window.open("../sel_genre",
             "장르 선택", "width=300, height=400, resizable = no");
     }
@@ -21,11 +20,16 @@
         openWin = window.open("../characters/new/" + title_id,
             "캐릭터 추가", "width=500, height=680, resizable = no");
     }
+
+    function openStrategy(character_id){
+        openWin = window.open("../characters/detail/" + character_id,
+        "캐릭터 정보", "width=500, height=600, resizable no");
+    }
 </script>
 
 <div th:replace="fragment/navigation.html::nav"></div>
 
-<form name="mgmtTitle" autocomplete="off" class="bg-white shadow-md rounded w-100" th:action="@{/game/title/detail}" method="post" th:object="${Title}">
+<form style="overflow: auto" name="mgmtTitle" autocomplete="off" class="bg-white shadow-md rounded w-100" th:action="@{/game/title/detail}" method="post" th:object="${Title}">
 
 <div class="py-2 bg-gray-500 flex justify-center">
     <button style="font-size: 2vmin" class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/genre/list'" >수정</button>
@@ -39,8 +43,8 @@
             <table class="table table-borderless">
                 <tbody class="w-100 column">
                     <tr>
-                        <td>
-                            <img class="align-items-center" style="max-height: 430px" th:src="@{'data:image/png;base64,' + *{encodeImage}}">
+                        <td style="vertical-align: middle">
+                            <img style="max-height: 430px; vertical-align: middle" th:src="@{'data:image/png;base64,' + *{encodeImage}}">
                         </td>
                         <td>
                             <div class="container-fluid">
@@ -117,6 +121,40 @@
                 </tbody>
             </table>
         </div>
+    </div>
+</div>
+<div class="container py-10 align-middle" style="font-size: 2vmin">
+    <div class="table-responsive align-middle">
+        <table class="table -full" style="table-layout: fixed" th:each="list : ${character_list}">
+            <tbody>
+                <tr>
+                    <td class="align-middle">
+                        <img class="align-items-center" style="max-height: 200px" th:src="@{'data:image/png;base64,' + ${list.encodeImage}}">
+                    </td>
+                    <td class="align-middle">
+                        <a class="mb-3 text-decoration-none text-black fw-bold" th:text="${list.korName}"></a><br>
+                        <a class="mb-3 text-decoration-none text-black fw-bold" th:text="${list.orgName}"></a>
+                    </td>
+                    <td class="align-middle">
+                        <label>
+                            <select style="font-size: 2vmin" class="shadow-md leading-tight border focus:outline-none focus:shadow-outline" th:field="*{company_name}" required>
+                                <option th:text="미진행" th:value="미진행">미진행</option>
+                                <option th:text="진행중" th:value="진행중">진행중</option>
+                                <option th:text="완료" th:value="완료">완료</option>
+                            </select>
+                            <label>
+                                <input type="button" th:value="적용" class="btn-outline-dark border">
+                            </label>
+                        </label>
+                    </td>
+                    <td class="align-middle">
+                        <label>
+                            <input type="button" th:onclick="'openStrategy(&quot;'+ ${list.getId()} +'&quot)'" class="btn-outline-dark border" value="공략 보기">
+                        </label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </form>

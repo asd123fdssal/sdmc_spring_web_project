@@ -1,7 +1,9 @@
 package com.arsud.sdmc_spring_web_project.controller;
 
+import com.arsud.sdmc_spring_web_project.entity.Characters;
 import com.arsud.sdmc_spring_web_project.entity.Company;
 import com.arsud.sdmc_spring_web_project.entity.Title;
+import com.arsud.sdmc_spring_web_project.service.CharactersService;
 import com.arsud.sdmc_spring_web_project.service.CompanyService;
 import com.arsud.sdmc_spring_web_project.service.GenreService;
 import com.arsud.sdmc_spring_web_project.service.TitleService;
@@ -22,11 +24,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TitleController {
 
+    private final ImageUtilty imageUtilty;
+    private final TitleValidator titleValidator;
+
     private final TitleService titleService;
     private final CompanyService companyService;
-    private final TitleValidator titleValidator;
-    private final ImageUtilty imageUtilty;
     private final GenreService genreService;
+    private final CharactersService charactersService;
 
     @GetMapping("/game/title/list")
     public String game(
@@ -55,8 +59,11 @@ public class TitleController {
         Title title = titleService.findById(id);
         title.setEncodeImage(imageUtilty.makeBase64Image(title.getPicture()));
         title.setCompany_name(title.getCompany().getKorName());
+        List<Characters> charactersList = charactersService.findAllByTitle(title);
+        charactersList.forEach(l -> l.setEncodeImage(imageUtilty.makeBase64Image(l.getPicture())));
         model.addAttribute("Company", companyService.findAll());
         model.addAttribute("Title", title);
+        model.addAttribute("character_list", charactersList);
         return "/game/title/detail";
     }
 

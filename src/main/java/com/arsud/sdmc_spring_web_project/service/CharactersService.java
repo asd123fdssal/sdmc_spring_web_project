@@ -6,6 +6,8 @@ import com.arsud.sdmc_spring_web_project.repository.CharactersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CharactersService {
@@ -29,6 +31,14 @@ public class CharactersService {
                         .valid(true)
                         .build()
         );
+    }
+
+    public List<Characters> findAllByTitle(Title title){
+        return charactersRepository.findAllByTitle(title);
+    }
+
+    public Characters findById(Long id){
+        return charactersRepository.findAllById(id);
     }
 
 }

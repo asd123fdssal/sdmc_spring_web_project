@@ -80,4 +80,14 @@ public class CharactersController {
         return "";
     }
 
+    @GetMapping("/game/title/characters/detail/{id}")
+    public String character_strategy(
+        Model model,
+        @PathVariable Long id
+    ){
+        Characters characters = charactersService.findById(id);
+        model.addAttribute("Characters", characters);
+        return "/game/title/characters/detail";
+    }
+
 }

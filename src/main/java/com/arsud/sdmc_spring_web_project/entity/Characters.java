@@ -32,4 +32,7 @@ public class Characters extends BaseEntity{
     private String strategy;
 
     private Boolean valid;
+
+    @Transient
+    private String encodeImage;
 }
