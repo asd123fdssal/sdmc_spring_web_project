@@ -5,6 +5,18 @@
 </head>
 <body>
 
+<script type="text/javascript">
+
+    let openWin;
+    window.name = "titleForm";
+
+    function openChild(){
+        openWin = window.open("../title/sel_genre",
+            "장르 선택", "width=300, height=400, resizable = no");
+    }
+
+</script>
+
 <div th:replace="fragment/navigation.html::nav"></div>
 
 <div class="py-32 bg-gray-200 flex justify-center">
@@ -18,14 +30,36 @@
                 <span>이미지 선택 : </span>
                 <input type="file" name="file" accept=".jpg, .png" class="form-control-file mb-3">
             </div>
-            <select th:field="*{company_name}" class="mb-3 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                <option value="" >-- 회사명 --</option>
-                <option th:each="list : ${Company}" th:value="${list.korName}" th:text="${list.korName}">VALUE</option>
-            </select>
+            <label class="w-full">
+                <select th:field="*{company_name}" class="mb-3 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    <option value="" >-- 회사명 --</option>
+                    <option th:each="list : ${Company}" th:value="${list.korName}" th:text="${list.korName}">VALUE</option>
+                </select>
+            </label>
+
+            <label class="w-full">
+                <select th:field="*{series_name}" class="mb-3 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <option value="" >-- 시리즈명 --</option>
+                    <option th:each="sList : ${Series}" th:value="${sList.korName}" th:text="${sList.korName}">VALUE</option>
+                </select>
+            </label>
+
+            <div>
+                <label class="w-full">
+                    <textarea id="input_genre" th:field="*{genre_list_str}" class="w-full shadow-md leading-tight focus:outline-none border focus:shadow-outline" readonly></textarea>
+                </label>
+            </div>
 
             <div class="mb-3">
-                <input type="text" id="rel_date" th:field="*{releaseDate}" placeholder="발매일" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                <input value="장르 선택" type="button" onclick="openChild()" class="px-2shadow-md leading-tight focus:outline-none focus:shadow-outline btn-outline-dark border w-full">
             </div>
+
+            <div class="mb-3">
+                <label>
+                    <input type="text" id="rel_date" th:field="${Title.releaseDate_str}" placeholder="발매일 (2000-01-01)" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </label>
+            </div>
+            <span class="mb-3" style="color: red" th:if="${#fields.hasErrors('releaseDate_str')}" th:errors="*{releaseDate_str}"><p>발매일 에러</p></span>
 
             <div class="mb-3">
                 <input type="text" id="new_game_kor" th:field="*{korName}" placeholder="게임명(한글)" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>

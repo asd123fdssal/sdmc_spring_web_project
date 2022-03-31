@@ -1,6 +1,8 @@
 package com.arsud.sdmc_spring_web_project.service;
 
 import com.arsud.sdmc_spring_web_project.entity.Company;
+import com.arsud.sdmc_spring_web_project.entity.Genre;
+import com.arsud.sdmc_spring_web_project.entity.Series;
 import com.arsud.sdmc_spring_web_project.entity.Title;
 import com.arsud.sdmc_spring_web_project.repository.TitleRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ public class TitleService {
 
     public Title save(
         Company company,
+        Series series,
         byte[] picture,
         LocalDate releaseDate,
         String korName,

@@ -1,10 +1,12 @@
 package com.arsud.sdmc_spring_web_project.entity;
 
 import lombok.*;
+import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -28,6 +30,8 @@ public class Title extends BaseEntity{
     @Column(name = "release_date")
     private LocalDate releaseDate;
 
+    @Transient
+    private List<Genre> genreList;
 
     @Column(name = "kor_name")
     private String korName;
@@ -47,4 +51,13 @@ public class Title extends BaseEntity{
 
     @Transient
     private String encodeImage;
+
+    @Transient
+    private String series_name;
+
+    @Transient
+    private String genre_list_str;
+
+    @Transient
+    private String releaseDate_str;
 }

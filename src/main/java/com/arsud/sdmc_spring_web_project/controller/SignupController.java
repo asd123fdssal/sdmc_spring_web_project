@@ -53,7 +53,7 @@ public class SignupController {
         );
 
 
-        return "/login";
+        return "/user/login";
     }
 
 }

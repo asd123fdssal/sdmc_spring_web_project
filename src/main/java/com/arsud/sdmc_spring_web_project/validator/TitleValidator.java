@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import java.util.regex.Pattern;
+
 @Component
 @RequiredArgsConstructor
 public class TitleValidator implements Validator {
@@ -28,6 +30,12 @@ public class TitleValidator implements Validator {
 
         if(title.getKorName().isBlank()){
             errors.rejectValue("korName", "kor_blank", "게임명을 입력해주세요");
+        }
+
+        if(title.getReleaseDate_str().isBlank()){
+            errors.rejectValue("releaseDate_str", "date_blank", "발매일을 입력해주세요");
+        } else if(!Pattern.matches("^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]$", title.getReleaseDate_str())){
+            errors.rejectValue("releaseDate_str", "date_pattern", "발매일 형식이 올바르지 않습니다.");
         }
     }
 }

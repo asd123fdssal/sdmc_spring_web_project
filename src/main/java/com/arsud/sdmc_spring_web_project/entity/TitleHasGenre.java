@@ -7,23 +7,20 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "genre")
+@Table(name = "title_has_genre")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Genre extends BaseEntity{
+public class TitleHasGenre {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @Column(name = "TITLE_ID")
+    private Long titleId;
 
-    private Boolean valid;
-
-
-    public String toString() {
-        return name;
-    }
+    @Column(name = "GENRE_ID")
+    private Long genreId;
 
 }

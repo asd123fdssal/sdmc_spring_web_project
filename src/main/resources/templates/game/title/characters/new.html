@@ -6,7 +6,7 @@
 <body>
 
 <div class="bg-gray-200 flex justify-center">
-    <form id="characterForm" autocomplete="off" class="bg-white shadow-md rounded px-5 pt-4 pb-4 mb-4" th:action="@{/templates/game/title/characters/new}" method="post" th:object="${Characters}" enctype="multipart/form-data">
+    <form id="characterForm" autocomplete="off" class="bg-white shadow-md rounded px-5 pt-4 pb-4 mb-4" th:action="@{/game/title/characters/new}" method="post" th:object="${Characters}" enctype="multipart/form-data">
         <label>
             <input th:field="${Title.id}" hidden>
         </label>
