@@ -19,7 +19,7 @@ public class Title extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "COMPANY_id")
     private Company company;
 

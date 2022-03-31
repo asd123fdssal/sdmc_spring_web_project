@@ -14,12 +14,10 @@ public class GenreService {
     private final GenreRepository genreRepository;
 
     public Genre save(String name){
-        Genre genre = Genre.builder()
+        return Genre.builder()
                 .name(name)
                 .valid(true)
                 .build();
-
-        return genreRepository.save(genre);
     }
 
     public Genre findByName(String name){

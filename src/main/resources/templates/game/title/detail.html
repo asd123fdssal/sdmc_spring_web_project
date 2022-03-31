@@ -8,69 +8,118 @@
 <script type="text/javascript">
 
     let openWin;
+    window.name = "mgmtTitle";
+
     function openChild()
     {
-        window.name = "mgmtTitle";
         openWin = window.open("../sel_genre",
             "장르 선택", "width=300, height=400, resizable = no");
+    }
+
+    function newCharacter(){
+        let title_id = document.getElementById("title_id").value;
+        openWin = window.open("../characters/new/" + title_id,
+            "캐릭터 추가", "width=500, height=680, resizable = no");
     }
 </script>
 
 <div th:replace="fragment/navigation.html::nav"></div>
+
+<form name="mgmtTitle" autocomplete="off" class="bg-white shadow-md rounded w-100" th:action="@{/game/title/detail}" method="post" th:object="${Title}">
+
 <div class="py-2 bg-gray-500 flex justify-center">
-    <button style="font-size: large" class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/genre/list'" >수정</button>
-    <button style="font-size: large" class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/genre/list'" >캐릭터 추가</button>
+    <button style="font-size: 2vmin" class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/genre/list'" >수정</button>
+    <input type="button" style="font-size: 2vmin" class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="newCharacter()" value="캐릭터 추가" >
+    <input class="visually-hidden" th:value="*{id}" id="title_id">
 </div>
 
-<div class="py-10 bg-gray-200 flex justify-center">
-    <div class="flex items-center" style="width: 95%">
-        <form name="mgmtTitle" autocomplete="off" class="bg-white shadow-md rounded w-100" th:action="@{/game/title/detail}" method="post" th:object="${Title}">
-            <table class="px-3 items-center ms-3 flex justify-center" style="font-size: 10px">
-                <tbody class="w-75">
+<div class="py-10 flex justify-center" style="font-size: 2vmin">
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table table-borderless">
+                <tbody class="w-100 column">
                     <tr>
-                        <td class="w-25" rowspan="1" style="vertical-align: top">
-                            <img class="align-items-end" style="max-height: 450px" th:src="@{'data:image/png;base64,' + *{encodeImage}}">
+                        <td>
+                            <img class="align-items-center" style="max-height: 430px" th:src="@{'data:image/png;base64,' + *{encodeImage}}">
                         </td>
-                        <td style="font-size: large" class="w-50">
-                            <div class="mb-3">
-                                <a>발매일　　</a>
-                                <input class="w-75 shadow-md leading-tight focus:outline-none border focus:shadow-outline" th:field="*{releaseDate}" required>
-                            </div>
-                            <div class="mb-3">
-                                <a>작품명　　</a>
-                                <input class="w-75 shadow-md leading-tight focus:outline-none border focus:shadow-outline" placeholder="한글" th:field="*{korName}" required>
-                            </div>
-                            <div class="mb-3">
-                                <a>작품명　　</a>
-                                <input class="w-75 shadow-md leading-tight focus:outline-none border focus:shadow-outline" placeholder="원어" th:field="*{orgName}" >
-                            </div>
-                            <div class="mb-3">
-                                <a>회사명　　</a>
-                                <select class="w-75 shadow-md leading-tight border focus:outline-none focus:shadow-outline" th:field="*{company_name}" required>
-                                    <option th:each="list : ${Company}" th:value="${list.korName}" th:text="${list.korName}"
-                                            th:selected="${list.korName} == *{company_name}">VALUE</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <a >장르　　　</a>
-                                <textarea style="width: 50%" id="input_genre" class="shadow-md leading-tight focus:outline-none border focus:shadow-outline" readonly></textarea>
-                                <input value="장르 선택" type="button" onclick="openChild()" style="width: 24%" class="px-2shadow-md leading-tight focus:outline-none focus:shadow-outline btn-outline-dark border">
-                            </div>
-                            <div class="mb-3">
-                                <a>후킹코드　</a>
-                                <input class="w-75 shadow-md leading-tight focus:outline-none border focus:shadow-outline" th:field="*{hookCode}" >
-                            </div>
-                            <div class="mb-3">
-                                <a>기타　　　</a>
-                                <textarea class="w-75 shadow-md leading-tight focus:outline-none border focus:shadow-outline" th:field="*{etc}"></textarea>
+                        <td>
+                            <div class="container-fluid">
+                                <div class="mb-2 row" style="column-count: 12">
+                                    <div class="col-sm-3"><a>발매일</a></div>
+                                    <div class="col-sm-9 w-full">
+                                        <label class="w-full">
+                                            <input class="w-full shadow-md leading-tight focus:outline-none border focus:shadow-outline" th:field="*{releaseDate}" required>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row" style="column-count: 12">
+                                    <div class="col-sm-3"><a>작품명</a></div>
+                                    <div class="col-sm-9 w-full">
+                                        <label class="w-full">
+                                            <textarea class="w-full shadow-md leading-tight focus:outline-none border focus:shadow-outline" placeholder="한글" th:field="*{korName}" required></textarea>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row" style="column-count: 12">
+                                    <div class="col-sm-3"><a>작품명</a></div>
+                                    <div class="col-sm-9 w-full">
+                                        <label class="w-full">
+                                            <textarea class="w-full shadow-md leading-tight focus:outline-none border focus:shadow-outline" placeholder="원어" th:field="*{orgName}" ></textarea>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row" style="column-count: 12">
+                                    <div class="col-sm-3"><a>회사명</a></div>
+                                    <div class="col-sm-9 w-full">
+                                        <label class="w-full">
+                                            <select class="w-full shadow-md leading-tight border focus:outline-none focus:shadow-outline" th:field="*{company_name}" required>
+                                                <option th:each="list : ${Company}" th:value="${list.korName}" th:text="${list.korName}"
+                                                        th:selected="${list.korName} == *{company_name}">VALUE</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row" style="column-count: 12">
+                                    <div class="col-sm-3"><a>장르</a></div>
+                                    <div class="col-sm-9 w-full">
+                                        <label class="w-full">
+                                            <input value="장르 선택" type="button" onclick="openChild()" class="px-2shadow-md leading-tight focus:outline-none focus:shadow-outline btn-outline-dark border w-full">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row" style="column-count: 12">
+                                    <div class="col-sm-3"><a></a></div>
+                                    <div class="col-sm-9 w-full">
+                                        <label class="w-full">
+                                            <textarea id="input_genre" class="w-full shadow-md leading-tight focus:outline-none border focus:shadow-outline" readonly></textarea>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row" style="column-count: 12">
+                                    <div class="col-sm-3"><a>코드</a></div>
+                                    <div class="col-sm-9 w-full">
+                                        <label class="w-full">
+                                            <input class="w-full shadow-md leading-tight focus:outline-none border focus:shadow-outline" th:field="*{hookCode}" >
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-2 row" style="column-count: 12">
+                                    <div class="col-sm-3"><a>기타</a></div>
+                                    <div class="col-sm-9 w-full">
+                                        <label class="w-full">
+                                            <textarea class="w-full shadow-md leading-tight focus:outline-none border focus:shadow-outline" th:field="*{etc}"></textarea>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
-        </form>
+        </div>
     </div>
 </div>
+</form>
 
 </body>
 </html>

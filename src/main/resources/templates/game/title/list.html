@@ -6,38 +6,32 @@
 <body>
 
 <div th:replace="fragment/navigation.html::nav"></div>
-<div class="py-2 bg-gray-200 flex justify-center" style="font-size: large">
-    <button class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/genre/list'" >장르 리스트</button>
-    <button class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/series/list'" >시리즈 리스트</button>
-    <button class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/company/list'" >회사 리스트</button>
+<div class="py-2 bg-gray-200 flex justify-center" style="font-size: 2vmin">
+    <button class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/genre/list'" >장르</button>
+    <button class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/series/list'" >시리즈</button>
+    <button class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/company/list'" >회사</button>
     <button class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/title/new'" >게임 추가</button>
 </div>
 
 <div class="py-10 flex justify-center fs-6">
     <div class="flex" style="width: 80%">
-        <table class="table table-responsive" style="text-decoration:none" >
+        <table class="table table-responsive" style="text-decoration:none; font-size: 2vmin; word-break: break-all" >
             <thead>
                 <tr>
-                    <th class="text-center"></th>
-                    <th class="text-center" style="width: 7%"></th>
-                    <th class="text-center" style="width: 15%">회사</th>
-                    <th class="text-center" style="width: 10%">출시일</th>
-                    <th class="text-center" style="width: 30%">시리즈명 (한글)</th>
-                    <th class="text-center" style="width: 30%">시리즈명 (원어)</th>
+                    <th class="text-center" style="width: 5%"></th>
+                    <th class="text-center" style="width: 20%">출시일</th>
+                    <th class="text-center" style="width: 60%">시리즈명 (한글)</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="list : ${title_list}" th:href="@{'/'}">
-                    <td class="text-center" th:text="${list.id}">#</td>
-                    <td class="text-center"><img th:src="@{'data:image/png;base64,' + ${list.encodeImage}}"></td>
-                    <td class="text-center" th:text="${list.company.korName}">장르명</td>
-                    <td class="text-center" th:text="${#temporals.format(list.releaseDate, 'yyMMdd')}">장르명</td>
-                    <td>
+                    <td class="text-center"><img style="max-width: 70px" th:src="@{'data:image/png;base64,' + ${list.encodeImage}}"></td>
+                    <td class="text-center" style="vertical-align: middle" th:text="${#temporals.format(list.releaseDate, 'yyMMdd')}">장르명</td>
+                    <td style="vertical-align: middle">
                         <span>
                             <a th:text="${list.korName}" style="text-decoration:none" th:href="@{'/game/title/detail/' + ${list.id}}"></a>
                         </span>
                     </td>
-                    <td th:text="${list.orgName}">장르명</td>
                 </tr>
             </tbody>
         </table>
