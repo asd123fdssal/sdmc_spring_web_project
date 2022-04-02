@@ -2,10 +2,13 @@ package com.arsud.sdmc_spring_web_project.config;
 
 import com.arsud.sdmc_spring_web_project.entity.Member;
 import com.arsud.sdmc_spring_web_project.service.MemberService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -57,5 +60,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             }
             return member;
         };
+    }
+
+    @Bean
+    public MappingJackson2HttpMessageConverter jsonEscapeConverter() {
+        // MappingJackson2HttpMessageConverter Default ObjectMapper 설정 및 ObjectMapper Config 설정
+        ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json().build();
+        objectMapper.getFactory().setCharacterEscapes(new HTMLCharacterEscapes());
+        return new MappingJackson2HttpMessageConverter(objectMapper);
     }
 }
