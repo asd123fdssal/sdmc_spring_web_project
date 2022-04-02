@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface CompanyRepository extends JpaRepository<Company, Long> {
     Company findByKorName(String kor_name);
     List<Company> findAllByValid(Boolean valid);
+    Company findCompanyByKorNameOrOrgName(String korName, String orgName);
 }

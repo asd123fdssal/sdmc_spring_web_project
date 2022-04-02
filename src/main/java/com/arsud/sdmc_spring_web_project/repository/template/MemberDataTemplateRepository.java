@@ -22,12 +22,12 @@ public class MemberDataTemplateRepository implements ITemplateRepository<MemberD
             String username
     ){
         return jdbcTemplate.query(
-                "select if(md.id is null, -1, md.id), md.etc, if(md.progress is null, '미진행', md.progress), md.valid, " +
-                        "c.id, c.picture, c.kor_name, c.org_name, c.strategy, c.valid " +
-                        "from member_data md " +
-                        "right join characters c on c.id = md.CHARACTER_id and c.valid = 1 " +
+                "select if(md.id is null, -1, md.id), md.etc, if(md.progress is null, '미진행', md.progress), " +
+                        "md.valid, c.id, c.picture, c.kor_name, c.org_name, c.strategy, c.valid  from characters c " +
+                        "inner join title t on t.id = c.TITLE_id and c.TITLE_id = ? " +
+                        "left join member_data md on md.CHARACTER_TITLE_id = t.id and c.id = md.CHARACTER_id and md.valid = 1 " +
                         "left join member m on m.id = md.member_id and md.valid = 1 " +
-                        "where md.CHARACTER_TITLE_id = ? and m.username = ? or m.username is null;",
+                        "where m.username = ? or m.username is null",
                 rowMapper(),
                 title_id,
                 username

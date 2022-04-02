@@ -63,11 +63,12 @@ public class TitleController {
             Principal principal
     ){
         Title title = titleService.findByTitleId(id);
-        title.convertImage();
-
         List<MemberData> memberData = memberDataService.findByTitleIdAndMemderId(title.getId(), principal.getName());
         List<Genre> genreList = genreService.findByTitleId(title.getId());
         Member member = memberService.findByUsername(principal.getName());
+
+        memberData.forEach(md -> md.getCharacters().convertImage());
+        title.convertImage();
         title.setGenreList(genreList);
         title.makeGenreListStr();
 

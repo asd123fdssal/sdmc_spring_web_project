@@ -33,4 +33,9 @@ public class CompanyService {
     }
 
     public List<Company> findAll() { return companyRepository.findAllByValid(true); }
+
+    public Company findCompanyByKorNameOrOrgName(
+            String korName,
+            String orgName
+    ) { return companyRepository.findCompanyByKorNameOrOrgName(korName, orgName); }
 }

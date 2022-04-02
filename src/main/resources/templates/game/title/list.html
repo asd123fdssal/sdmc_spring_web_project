@@ -6,16 +6,17 @@
 <body>
 
 <div th:replace="fragment/navigation.html::nav"></div>
-<div class="py-2 bg-gray-200 flex justify-center" style="font-size: 2vmin">
+<div class="py-2 bg-gray-200 flex justify-center" style="font-size: 3vmin">
     <button class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/genre/list'" >장르</button>
     <button class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/series/list'" >시리즈</button>
     <button class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/company/list'" >회사</button>
     <button class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/title/new'" >게임 추가</button>
+    <button class="m-1 bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="location.href='/game/title/getchu'" >VNDB 추가</button>
 </div>
 
 <div class="py-10 flex justify-center fs-6">
     <div class="flex" style="width: 80%">
-        <table class="table table-responsive" style="text-decoration:none; font-size: 2vmin; word-break: break-all" >
+        <table class="table table-responsive" style="text-decoration:none; font-size: 3vmin; word-break: break-all" >
             <thead>
                 <tr>
                     <th class="text-center" style="width: 5%"></th>
@@ -25,7 +26,7 @@
             </thead>
             <tbody>
                 <tr th:each="list : ${title_list}" th:href="@{'/'}">
-                    <td class="text-center"><img style="max-width: 70px" th:src="@{'data:image/png;base64,' + ${list.encodeImage}}"></td>
+                    <td class="text-center"><img style="max-width: 80px" th:src="@{'data:image/png;base64,' + ${list.encodeImage}}"></td>
                     <td class="text-center" style="vertical-align: middle" th:text="${#dates.format(list.releaseDate, 'yyMMdd')}">장르명</td>
                     <td style="vertical-align: middle">
                         <span>

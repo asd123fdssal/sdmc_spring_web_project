@@ -17,12 +17,12 @@ public class TitleTemplateRepository implements ITemplateRepository<Title>{
         Long title_id
     ){
         return jdbcTemplate.query(
-                "select t.id, t.picture, t.release_date, t.kor_name, t.org_name, t.hook_code, t.etc, t.valid, \n" +
-                        "c.id, c.kor_name, c.org_name, c.valid, \n" +
-                        "s.kor_name\n" +
-                        "from title t \n" +
-                        "inner join company c on c.id = t.COMPANY_id and c.valid = 1 \n" +
-                        "left join series s on s.id\t = t.SERIES_id and s.valid = 1 \n" +
+                "select t.id, t.picture, t.release_date, t.kor_name, t.org_name, t.hook_code, t.etc, t.valid, " +
+                        "c.id, c.kor_name, c.org_name, c.valid, " +
+                        "s.kor_name " +
+                        "from title t " +
+                        "inner join company c on c.id = t.COMPANY_id and c.valid = 1 " +
+                        "left join series s on s.id\t = t.SERIES_id and s.valid = 1 " +
                         "where t.id = ?",
                 rowMapper(),
                 title_id
