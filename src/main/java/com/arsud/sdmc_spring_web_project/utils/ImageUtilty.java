@@ -7,7 +7,7 @@ import java.util.Base64;
 @Component
 public class ImageUtilty {
 
-    public String makeBase64Image(byte[] image){
+    public static String makeBase64Image(byte[] image){
         return Base64.getEncoder().encodeToString(image);
     }
 }
