@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<script type="text/javascript">
+<script th:inline="javascript">
 
     let openWin;
     window.name = "mgmtTitle";
@@ -21,10 +21,36 @@
             "캐릭터 추가", "width=500, height=680, resizable = no");
     }
 
+    async function applyProgress(character_id, member_data_id, index) {
+        let selectOption = document.getElementById('progression' + index);
+        let progress = selectOption[selectOption.selectedIndex].text;
+
+        let member_id = [[${member.id}]];
+        let title_id = [[${Title.id}]]
+
+        let messages = {
+            'member_data_id': member_data_id,
+            'character_id': character_id,
+            'member_id': member_id,
+            'title_id': title_id,
+            'progress': progress
+        };
+
+        let response = await fetch("/game/title/detail/characters", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(messages)
+        });
+        let result = await response.json();
+    }
+
     function openStrategy(character_id){
         openWin = window.open("../characters/detail/" + character_id,
         "캐릭터 정보", "width=500, height=600, resizable no");
     }
+
 </script>
 
 <div th:replace="fragment/navigation.html::nav"></div>
@@ -125,31 +151,29 @@
 </div>
 <div class="container py-10 align-middle" style="font-size: 2vmin">
     <div class="table-responsive align-middle">
-        <table class="table -full" style="table-layout: fixed" th:each="list : ${character_list}">
+        <table class="table -full" style="table-layout: fixed" th:each="list,index : ${memberData}">
             <tbody>
                 <tr>
                     <td class="align-middle">
-                        <img class="align-items-center" style="max-height: 200px" th:src="@{'data:image/png;base64,' + ${list.encodeImage}}">
+                        <img class="align-items-center" style="max-height: 200px" th:src="@{'data:image/png;base64,' + ${list.characters.getEncodeImage()}}">
                     </td>
                     <td class="align-middle">
-                        <a class="mb-3 text-decoration-none text-black fw-bold" th:text="${list.korName}"></a><br>
-                        <a class="mb-3 text-decoration-none text-black fw-bold" th:text="${list.orgName}"></a>
+                        <a class="mb-3 text-decoration-none text-black fw-bold" th:text="${list.characters.korName}"></a><br>
+                        <a class="mb-3 text-decoration-none text-black fw-bold" th:text="${list.characters.orgName}"></a>
                     </td>
                     <td class="align-middle">
                         <label>
-                            <select style="font-size: 2vmin" class="shadow-md leading-tight border focus:outline-none focus:shadow-outline" th:field="*{company_name}" required>
-                                <option th:text="미진행" th:value="미진행">미진행</option>
-                                <option th:text="진행중" th:value="진행중">진행중</option>
-                                <option th:text="완료" th:value="완료">완료</option>
+                            <select th:id="'progression' + ${index.index}" style="font-size: 2vmin"
+                                    th:onchange="'applyProgress('+${list.characters.getId()}+','+ ${list.getId()} +','+ ${index.index} +')'"
+                                    class="shadow-md leading-tight border focus:outline-none focus:shadow-outline" required>
+                                <option th:each="prog : ${Progress}"
+                                        th:text="${prog}" th:selected="${prog} == ${list.progress}">진행도</option>
                             </select>
-                            <label>
-                                <input type="button" th:value="적용" class="btn-outline-dark border">
-                            </label>
                         </label>
                     </td>
                     <td class="align-middle">
                         <label>
-                            <input type="button" th:onclick="'openStrategy(&quot;'+ ${list.getId()} +'&quot)'" class="btn-outline-dark border" value="공략 보기">
+                            <input type="button" th:onclick="'openStrategy(&quot;'+ ${list.characters.getId()} +'&quot;)'" class="btn-outline-dark border" value="공략 보기">
                         </label>
                     </td>
                 </tr>

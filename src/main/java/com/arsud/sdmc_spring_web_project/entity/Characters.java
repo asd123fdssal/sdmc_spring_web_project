@@ -1,5 +1,6 @@
 package com.arsud.sdmc_spring_web_project.entity;
 
+import com.arsud.sdmc_spring_web_project.utils.ImageUtilty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,4 +36,8 @@ public class Characters extends BaseEntity{
 
     @Transient
     private String encodeImage;
+
+    public void convertImage(){
+        encodeImage = ImageUtilty.makeBase64Image(picture);
+    }
 }

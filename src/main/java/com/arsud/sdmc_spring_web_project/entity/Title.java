@@ -1,16 +1,16 @@
 package com.arsud.sdmc_spring_web_project.entity;
 
-import lombok.*;
-import org.springframework.data.jpa.repository.Query;
+import com.arsud.sdmc_spring_web_project.utils.ImageUtilty;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "title")
 @Setter
 @Getter
@@ -28,7 +28,7 @@ public class Title extends BaseEntity{
     private byte[] picture;
 
     @Column(name = "release_date")
-    private LocalDate releaseDate;
+    private Date releaseDate;
 
     @Transient
     private List<Genre> genreList;
@@ -60,4 +60,34 @@ public class Title extends BaseEntity{
 
     @Transient
     private String releaseDate_str;
+
+    public Title(Long id, Company company, byte[] picture, Date releaseDate, List<Genre> genreList, String korName, String orgName, String hookCode, String etc, Boolean valid, String company_name, String encodeImage, String series_name, String genre_list_str, String releaseDate_str) {
+        this.id = id;
+        this.company = company;
+        this.picture = picture;
+        this.releaseDate = releaseDate;
+        this.genreList = genreList;
+        this.korName = korName;
+        this.orgName = orgName;
+        this.hookCode = hookCode;
+        this.etc = etc;
+        this.valid = valid;
+        this.company_name = company_name;
+        this.encodeImage = encodeImage;
+        this.series_name = series_name;
+        this.genre_list_str = genre_list_str;
+        this.releaseDate_str = releaseDate_str;
+    }
+
+    public Title() {
+    }
+
+    public void convertImage(){
+        encodeImage = ImageUtilty.makeBase64Image(picture);
+    }
+
+    public void makeGenreListStr(){
+        genre_list_str = Arrays.toString(genreList.toArray()).replace("[","").
+                replace("]","").replace(" ", "");
+    }
 }

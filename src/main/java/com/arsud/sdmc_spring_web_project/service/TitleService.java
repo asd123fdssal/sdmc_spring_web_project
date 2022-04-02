@@ -5,11 +5,13 @@ import com.arsud.sdmc_spring_web_project.entity.Genre;
 import com.arsud.sdmc_spring_web_project.entity.Series;
 import com.arsud.sdmc_spring_web_project.entity.Title;
 import com.arsud.sdmc_spring_web_project.repository.TitleRepository;
+import com.arsud.sdmc_spring_web_project.repository.template.TitleTemplateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,12 +19,13 @@ import java.util.List;
 public class TitleService {
 
     private final TitleRepository titleRepository;
+    private final TitleTemplateRepository titleTemplateRepository;
 
     public Title save(
         Company company,
         Series series,
         byte[] picture,
-        LocalDate releaseDate,
+        Date releaseDate,
         String korName,
         String orgName,
         String hookCode,
@@ -44,4 +47,5 @@ public class TitleService {
 
     public List<Title> findAll(){ return titleRepository.findAllByValid(true); }
     public Title findById(Long id) { return titleRepository.findByValidAndId(true, id); }
+    public Title findByTitleId(Long title_id) { return titleTemplateRepository.findByTitleId(title_id); }
 }

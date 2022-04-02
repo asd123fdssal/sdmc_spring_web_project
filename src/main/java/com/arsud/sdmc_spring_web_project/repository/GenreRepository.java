@@ -13,6 +13,10 @@ import java.util.List;
 public interface GenreRepository extends JpaRepository<Genre, Long> {
     Genre findByName(String name);
     List<Genre> findAllByValid(Boolean valid);
-    @Query(value = "select new com.arsud.sdmc_spring_web_project.dto.GenreList(g.id, g.name, g.valid, g.created_at, g.updated_at) from Genre g, TitleHasGenre thg where thg.genreId = g.id and thg.titleId = :titleId")
+    @Query(value =
+            "select new com.arsud.sdmc_spring_web_project.dto.GenreList" +
+                    "(g.id, g.name, g.valid, g.created_at, g.updated_at) " +
+                    "from Genre g, TitleHasGenre thg " +
+                    "where thg.genreId = g.id and thg.titleId = :titleId")
     List<GenreList> findByTitleId(@Param("titleId") Long titleId);
 }

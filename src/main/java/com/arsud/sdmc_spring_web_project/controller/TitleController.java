@@ -1,5 +1,6 @@
 package com.arsud.sdmc_spring_web_project.controller;
 
+import com.arsud.sdmc_spring_web_project.constant.Progress;
 import com.arsud.sdmc_spring_web_project.dto.GenreList;
 import com.arsud.sdmc_spring_web_project.entity.*;
 import com.arsud.sdmc_spring_web_project.service.*;
@@ -14,10 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,22 +26,22 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TitleController {
 
-    private final ImageUtilty imageUtilty;
     private final TitleValidator titleValidator;
 
     private final TitleService titleService;
     private final CompanyService companyService;
     private final GenreService genreService;
-    private final CharactersService charactersService;
     private final SeriesService seriesService;
     private final TitleHasGenreService titleHasGenreService;
+    private final MemberDataService memberDataService;
+    private final MemberService memberService;
 
     @GetMapping("/game/title/list")
     public String game(
             Model model
     ){
         List<Title> tList = titleService.findAll();
-        tList.forEach(t -> t.setEncodeImage(imageUtilty.makeBase64Image(t.getPicture())));
+        tList.forEach(Title::convertImage);
         model.addAttribute("title_list", titleService.findAll());
         return "/game/title/list";
     }
@@ -59,25 +59,23 @@ public class TitleController {
     @GetMapping("/game/title/detail/{id}")
     public String game_detail(
             Model model,
-            @PathVariable Long id
+            @PathVariable Long id,
+            Principal principal
     ){
-        Title title = titleService.findById(id);
-        title.setEncodeImage(imageUtilty.makeBase64Image(title.getPicture()));
-        title.setCompany_name(title.getCompany().getKorName());
-        List<Characters> charactersList = charactersService.findAllByTitle(title);
-        if(charactersList != null) {
-            charactersList.forEach(l -> l.setEncodeImage(imageUtilty.makeBase64Image(l.getPicture())));
-        }
+        Title title = titleService.findByTitleId(id);
+        title.convertImage();
 
-        List<GenreList> gl = genreService.findGenreListByTitleId(title.getId());
-        List<Genre> genreList = new ArrayList<Genre>();
-        gl.forEach(g -> genreList.add(g.toGenre()));
-        title.setGenre_list_str(Arrays.toString(genreList.toArray()).replace("[","").
-                replace("]","").replace(" ", ""));
+        List<MemberData> memberData = memberDataService.findByTitleIdAndMemderId(title.getId(), principal.getName());
+        List<Genre> genreList = genreService.findByTitleId(title.getId());
+        Member member = memberService.findByUsername(principal.getName());
+        title.setGenreList(genreList);
+        title.makeGenreListStr();
 
         model.addAttribute("Company", companyService.findAll());
         model.addAttribute("Title", title);
-        model.addAttribute("character_list", charactersList);
+        model.addAttribute("memberData", memberData);
+        model.addAttribute("Progress", Progress.listOfProgress());
+        model.addAttribute("member", member);
         return "/game/title/detail";
     }
 
@@ -89,7 +87,11 @@ public class TitleController {
             ){
         titleValidator.validate(title, bindingResult);
 
-        title.setReleaseDate(LocalDate.parse(title.getReleaseDate_str(), DateTimeFormatter.ISO_DATE));
+        try {
+            title.setReleaseDate(new SimpleDateFormat("yyMMdd").parse(title.getReleaseDate_str()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         title.setCompany(companyService.findByKorName(title.getCompany_name()));
         byte[] image = null;
