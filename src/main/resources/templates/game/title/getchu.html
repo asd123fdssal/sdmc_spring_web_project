@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragment/head.html::head">
+    <title>SDMC 타이틀 추가</title>
+</head>
+<body>
+
+<div th:replace="fragment/navigation.html::nav"></div>
+
+<div class="py-32 bg-gray-200 flex justify-center">
+    <div class="w-full max-w-xs">
+        <form id="titleForm" autocomplete="off" class="bg-white shadow-md rounded px-5 pt-4 pb-4 mb-4" th:action="@{/game/title/getchu}" method="post">
+            <div class="mb-3">
+                <label class="mb-3">
+                    <input type="text" th:field="${CrawlingDto.korName}" placeholder="게임명 (한글)" class="w-full shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </label>
+
+                <label class="mb-3">
+                    <input type="text" th:field="${CrawlingDto.releaseDate}" placeholder="발매일" class="w-full shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </label>
+
+                <label class="mb-3">
+                    <input type="text" th:field="${CrawlingDto.url}" placeholder="VNDB 주소" class="w-full shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </label>
+
+                <label class="w-full">
+                    <input type="submit" id="btn_joinForm" class="mb-3 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
+                </label>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
